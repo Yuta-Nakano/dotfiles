@@ -103,11 +103,8 @@ brew install exa bat procs curl git
 sudo apt remove -y curl git
 
 # anyenv install when not exists
-brew install anyenv
 if [ ! `echo $(which anyenv) | grep anyenv` ]; then
     brew install anyenv
-
-    anyenv init
     echo '# anyenv' >> $HOME/.profile
     echo 'eval "$(anyenv init -)"' >> $HOME/.profile
     source $HOME/.profile
@@ -121,6 +118,8 @@ if [ ! `echo $(which anyenv) | grep anyenv` ]; then
 
     # install node 12.16.2 LTS
     nodenv install 12.16.2
+    nodenv global 12.16.2
+    npm -g install yarn
 fi
 
 # zplug install when not exists
@@ -158,3 +157,4 @@ fi
 sudo apt clean
 sudo apt -y autoremove
 sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+reload
