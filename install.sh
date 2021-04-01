@@ -16,7 +16,6 @@ case `uname -sr` in
         sudo apt clean
         sudo apt -y autoremove
         sudo apt -y update
-        sudo apt install -y curl git docker.io
 
         # やりようが困るやつ
         cat <<EOF >> $HOME/.profile
@@ -111,15 +110,17 @@ if [ ! `echo $(which anyenv) | grep anyenv` ]; then
 
     # nodenv, phpenv, rbenv, pyenv install
     anyenv install --init
-    anyenv install nodenv
+    anyenv install nodenvyarn-install.git (nodenv root)"/plugins/nodenv-yarn-install"
+    touch $(nodenv root)/default-packages
     anyenv install phpenv
     anyenv install rbenv
     anyenv install pyenv
 
     # install node 12.16.2 LTS
-    nodenv install 12.16.2
-    nodenv global 12.16.2
-    npm -g install yarn
+    mkdir -p "$(nodenv root)/plugins"
+    # git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
+    nodenv install 12.18.0
+    nodenv global 12.18.0
 fi
 
 # zplug install when not exists
@@ -137,21 +138,6 @@ echo '# aliases' >> $HOME/.profile
 echo 'source $HOME/.aliases/common.sh' >> $HOME/.profile
 echo "source $OS_ALIASES_PATH" >> $HOME/.profile
 source $HOME/.profile
-
-# docker
-if [ "$OS_CHECK" = 'windows' ];
-    then
-        echo -n -e "\n" >>  $HOME/.profile
-        echo '# docker' >>  $HOME/.profile
-        echo 'export DOCKER_TLS_VERIFY=1' >> $HOME/.profile
-        echo 'export DOCKER_HOST="tcp://192.168.99.101:2376"' >> $HOME/.profile
-        echo 'export DOCKER_CERT_PATH="/mnt/c/Users/nakano_yuta/.docker/machine/machines/default"' >> $HOME/.profile
-        echo 'export DOCKER_MACHINE_NAME="default"' >> $HOME/.profile
-
-        # docker-compose
-        sudo curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
-        sudo chmod +x /usr/bin/docker-compose
-fi
 
 # Clean
 sudo apt clean

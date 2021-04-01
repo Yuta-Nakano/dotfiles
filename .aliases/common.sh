@@ -1,5 +1,3 @@
-echo '.aliases'
-
 # linux
 alias       cl='clear'
 alias       ls='exa -xGF'
@@ -42,9 +40,12 @@ function glt-remove {
   fi
 }
 
+function git-diff {
+  git diff develop "$1" --name-only > ./diff.txt
+}
 
 # gitignore.io
-function gignore { curl -sLw n https://www.gitignore.io/api/$@ ;}
+function gitignore { curl -sLw n https://www.gitignore.io/api/$@ ;}
 
 # docker-compose
 alias balse='docker-compose down --rmi all --volumes'
